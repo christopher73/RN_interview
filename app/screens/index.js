@@ -1,3 +1,3 @@
-export * from './auth-screen';
-export * from './info-screen';
-export * from './welcome-screen';
+export * from './auth-screen/auth-screen';
+export * from './info-screen/info-screen';
+export * from './welcome-screen/welcome-screen';

@@ -2,10 +2,9 @@ import {palette} from './palette';
 
 export const colors = {
   /**
-   * The palette is available to use, but prefer using the name.
+   * or just pull variable right from palette
    */
   palette,
-  transparent: 'rgba(0, 0, 0, 0)',
 
   background: palette.white,
 

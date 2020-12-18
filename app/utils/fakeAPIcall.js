@@ -1,10 +1,15 @@
-export const getUser = (id) =>
-  new Promise((resolve, reject) => {
-    const user = users[id];
-
-    if (!user) {
-      return setTimeout(() => reject(new Error('User not found')), 250);
-    }
-
-    setTimeout(() => resolve(users[id]), 250);
-  });
+/**
+ *
+ * @returns  a resolve promise, fakes an API call ( delay response of 2s)
+ *
+ */
+export const fakeAPIcall = {
+  getUser: function (data) {
+    return new Promise((resolve, reject) => {
+      setTimeout(
+        () => resolve(JSON.stringify({userName: data.userName})),
+        2000,
+      );
+    });
+  },
+};

@@ -1,50 +1,56 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TextInput,
-  Dimensions,
-  TouchableOpacity,
-  SafeAreaView,
-} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import {colors} from '../../themes';
-const width = Dimensions.get('screen').width;
+
+import {AuthContext} from '../../navigation';
+import {Button, TextInput} from '../../components';
 
 export const AuthScreen = () => {
+  const {signIn} = React.useContext(AuthContext);
+
+  /**
+   * @warning
+   * if userName or password === "" then warning is true
+   * */
+  const [warning, setwarning] = React.useState(false);
+
   const [userName, setUserName] = React.useState('');
   const [password, setPassword] = React.useState('');
 
+  const handlePress = () => {
+    setwarning(false);
+    signIn({userName: userName, password: password});
+  };
   return (
     <View style={styles.full}>
       <Text style={styles.title}> RN coding challenge =)</Text>
+      {warning ? <Text>Please provide a username and password </Text> : null}
       <View>
         <TextInput
           placeholder="Username"
-          style={styles.textInput}
+          warning={warning}
           autoCompleteType="username"
           value={userName}
           onChangeText={(text) => setUserName(text)}
         />
         <TextInput
           placeholder="Password"
-          style={styles.textInput}
+          warning={warning}
           secureTextEntry={true}
           textContentType="password"
           autoCompleteType="password"
           value={password}
           onChangeText={(text) => setPassword(text)}
         />
-        <TouchableOpacity
-          style={{
-            ...styles.textInput,
-            alignItems: 'center',
-            justifyContent: 'center',
-            backgroundColor: colors.primaryDarker,
-            borderWidth: 0,
-          }}>
-          <Text style={styles.button}>Login</Text>
-        </TouchableOpacity>
+        <Button
+          text="Login"
+          onPress={() => {
+            userName === '' || password === ''
+              ? setwarning(true)
+              : handlePress();
+          }}
+        />
       </View>
     </View>
   );
@@ -55,27 +61,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-evenly',
   },
-  container: {
-    backgroundColor: colors.transparent,
-    paddingHorizontal: 4,
-  },
   title: {
-    // marginTop: height * 0.15,
-    // marginBottom: height * 0.15,
     fontSize: 25,
     color: colors.palette.black,
-  },
-  textInput: {
-    padding: 10,
-    height: 40,
-    width: width * 0.8,
-    borderWidth: 2,
-    borderColor: colors.palette.lighterGrey,
-    marginBottom: 10,
-    borderRadius: 5,
-  },
-  button: {
-    fontSize: 18,
-    color: colors.palette.white,
   },
 });
